@@ -1,5 +1,7 @@
 # WorkBuddy 记忆防丢失工具包 (workbuddy-memory-kit)
 
+**中文** | [English](#english)
+
 让 AI 助手（WorkBuddy / 类工具）长期稳定记住你，解决三大焦虑：
 
 1. **换窗口 / 开新对话，AI 忘了之前说的** —— 对话气泡不跨窗口，记忆必须落盘。
@@ -76,3 +78,71 @@ MIT —— 自由使用、修改、再分发，包括商业化。详见 [LICENSE
 ## 贡献
 
 欢迎提 Issue / PR：更多记忆治理技巧、其他 AI 工具的适配、翻译成英文等。
+
+---
+
+<a name="english"></a>
+# WorkBuddy Memory Kit (workbuddy-memory-kit) — English
+
+Help your AI assistant (WorkBuddy / similar tools) remember you reliably over the long term, and fix three common anxieties:
+
+1. **New window / new chat → the AI forgot what we said** — chat bubbles don't cross windows; memory must be persisted to disk.
+2. **After a long conversation, the AI suddenly "misremembers" or "truncates" memory** — the system-generated profile drifts and can be overwritten.
+3. **No idea what should be written to a file vs. left in chat** — important conventions live only in the conversation and vanish when the window closes.
+
+This kit turns a battle-tested "memory governance + cross-window handoff" method into two installable skills.
+
+## Two skills included
+
+| Skill | Governs | Trigger examples |
+|-------|---------|------------------|
+| `memory-anchor` | How memory **stays** — 3-layer architecture, anchor-pointer directory, daily guard, disaster-recovery snapshot, system-profile drift fix | "how do I stop it forgetting" / "memory lost" / "why does my AI keep forgetting" |
+| `cross-window-handoff` | How windows **hand off** — salvage edit history, reconnect context, rebuild display when switching windows | "new window" / "come here" / "pick up where we left off" |
+
+Together they form a complete anti-amnesia solution: `memory-anchor` keeps things safe day-to-day; `cross-window-handoff` keeps things safe across windows.
+
+## Install
+
+Copy the two directories under `skills/` into your WorkBuddy **user-level skills directory**:
+
+```bash
+# macOS / Linux
+cp -r skills/* ~/.workbuddy/skills/
+
+# Windows (PowerShell)
+Copy-Item -Recurse skills/* $env:USERPROFILE/.workbuddy/skills/
+```
+
+Restart WorkBuddy or start a new conversation; mentioning the triggers above auto-loads the skill.
+
+> User-level skills affect only your machine — they don't impact other users and won't be auto-overwritten by the system.
+
+## Usage
+
+- **Worried the AI will forget** → say "how do I stop it forgetting" to load `memory-anchor`; follow its 3-layer architecture to organize your memory files.
+- **Switching windows** → in the old window say "new window" (the AI salvages edit history and leaves a handoff anchor); in the new window say "come here" (the AI reconnects context and rebuilds the display).
+- **AI remembered wrong** → usually a system-profile drift; follow `memory-anchor`'s "system-profile drift fix SOP".
+
+## Placeholders (replace before deploying)
+
+Skill files use placeholders — swap them for your actual paths:
+
+- `{{WORKBUDDY_HOME}}` — WorkBuddy config root (`C:/Users/<you>/.workbuddy` on Windows, `~/.workbuddy` on macOS/Linux)
+- `{{KB_DIR}}` — your fixed knowledge-base / documents directory
+- `{{BACKUP_ROOT}}` — your external backup drive root
+- `<OLD_UUID>` / `<your-user-id>` — the session / user identifiers your WorkBuddy generated locally
+
+> Note: the original skills used concrete paths and personal info on the author's machine; this open-source edition generalizes everything to placeholders and contains no private data.
+
+## Who it's for
+
+- **First-timers setting up long-term memory for an AI** — follow the steps to avoid the "loses memory on window switch" trap.
+- **Heavy AI users with many sessions who fear losing work** — anchor + guard + handoff keeps outputs from disappearing with the window.
+
+## License
+
+MIT — free to use, modify, and redistribute, including commercially. See [LICENSE](LICENSE).
+
+## Contribute
+
+Issues / PRs welcome: more memory-governance tips, adapters for other AI tools, English translations, etc.
